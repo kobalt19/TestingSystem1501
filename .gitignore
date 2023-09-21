@@ -1,2 +1,5 @@
 venv
 .idea
+__pycache__
+alembic/__pycache__
+models/__pycache__
