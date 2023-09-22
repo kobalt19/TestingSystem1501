@@ -7,7 +7,6 @@ from sqlalchemy import pool
 
 from alembic import context
 
-print(os.path.dirname(os.path.dirname(__file__)))
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
 from backend import Base
