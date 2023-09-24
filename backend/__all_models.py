@@ -1,2 +1,2 @@
-from .models.task import Task
-from .models.user import User
+from backend.models.task import Task
+from backend.models.user import User

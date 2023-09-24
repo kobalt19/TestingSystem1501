@@ -1,5 +1,5 @@
 import sqlalchemy as sa
-from .. import Base
+from backend import Base
 
 
 class Task(Base):
