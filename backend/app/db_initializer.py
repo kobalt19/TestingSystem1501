@@ -12,7 +12,10 @@ engine = create_engine(DATABASE_URL, echo=True, future=True)
 Base = declarative_base()
 SessionLocal = sessionmaker(bind=engine)
 
-from .models import __all_models
+try:
+    from .models import __all_models
+except ImportError:
+    from models import __all_models
 
 Base.metadata.create_all(engine)
 

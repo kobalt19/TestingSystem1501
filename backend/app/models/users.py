@@ -7,7 +7,13 @@ from passlib.hash import sha256_crypt
 import sqlalchemy as sa
 from sqlalchemy_serializer import SerializerMixin
 
-from ..db_initializer import Base
+try:
+    from ..db_initializer import Base
+except ImportError:
+    import os
+    import sys
+    sys.path.append(os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
+    from db_initializer import Base
 
 
 class User(Base, SerializerMixin):
