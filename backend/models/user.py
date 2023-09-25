@@ -1,6 +1,6 @@
 import sqlalchemy as sa
 from sqlalchemy_serializer import SerializerMixin
-from backend import Base
+from .. import Base
 
 
 class User(Base, SerializerMixin):
