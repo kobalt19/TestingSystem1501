@@ -19,7 +19,7 @@ except ImportError:
 class User(Base, SerializerMixin):
     __tablename__ = 'users'
     id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
-    username = sa.Column(sa.String, nullable=False)
+    username = sa.Column(sa.String, unique=True, nullable=False)
     password_hash = sa.Column(sa.String, nullable=False)
     is_active = sa.Column(sa.Boolean, default=False)
 

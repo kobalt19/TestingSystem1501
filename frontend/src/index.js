@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import './index.css';
 import PendingTests from './pages/PendingTests.jsx';
+import Register from './pages/Register.jsx';
 import Results from './pages/Results.jsx';
 
 const router = createBrowserRouter([
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
     {
         path: '/results',
         element: <Results/>
+    },
+    {
+        path: '/register',
+        element: <Register/>,
     }
 ])
 

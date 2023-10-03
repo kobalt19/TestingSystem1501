@@ -20,7 +20,6 @@ def is_password_correct(password):
         assert all(c in (ascii_letters + digits) for c in password)
         assert any(c in ascii_letters for c in password)
         assert any(c in digits for c in password)
+        return True
     except AssertionError:
         return False
-    finally:
-        return True

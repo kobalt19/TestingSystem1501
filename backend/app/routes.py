@@ -1,7 +1,7 @@
-from typing import Optional
 from fastapi import (
     Body, Depends, status
 )
+from fastapi.exceptions import HTTPException
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from . import server
@@ -15,17 +15,19 @@ from .utils import (
 )
 
 __all__ = (
-    'signup',
+    'register',
 )
 
 
-@server.post('/signup')
-def signup(
+@server.post('/register')
+def register(
         payload: CreateUserSchema = Body(),
         session: Session = Depends(get_db)
 ):
     password = payload.password_hash
     if not is_password_correct(password):
-        return JSONResponse({'message': 'Incorrect form of password'}, status_code=status.HTTP_400_BAD_REQUEST)
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST
+        )
     payload.password_hash = User.get_password_hash(password)
     return JSONResponse(create_user(session, payload).to_dict())
