@@ -17,3 +17,8 @@ class UserSchema(UserBaseSchema):
 
     class Config:
         from_attributes = True
+
+
+class UserRegisterSchema(UserBaseSchema):
+    password: str
+    password_again: str
