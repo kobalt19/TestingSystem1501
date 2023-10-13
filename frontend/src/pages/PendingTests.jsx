@@ -7,7 +7,11 @@ import useFetching from '../hooks/useFetching.js';
 
 const PendingTests = () =>
 {
-    const options = [{name: 'Тесты', link: '/pending_tests'}, {name: 'Результаты', link: '/results'}];
+    const options = 
+    [
+        {name: 'Тесты', link: '/pending_tests', active: false, id: 0}, 
+        {name: 'Результаты', link: '/results', active: true, id: 1},
+    ];
     const [tests, setTests] = useState([]);
     const [fetchTests, isLoading, error] = useFetching(async () =>
     {

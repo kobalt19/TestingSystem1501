@@ -4,3 +4,4 @@ __pycache__
 alembic/__pycache__
 models/__pycache__
 test.py
+.vs

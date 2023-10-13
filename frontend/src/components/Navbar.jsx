@@ -8,8 +8,8 @@ const Navbar = ({options}) =>
             {
                 options.map(opt => 
                     opt.active
-                        ? <span className="NavbarElement" key={opt.id}>{opt.name}</span>
-                        : <a href={opt.link} className="NavbarElement NavbarLink" key={opt.id}>{opt.name}</a>
+                        ? <a href={opt.link} className="NavbarElement NavbarLink" key={opt.id}>{opt.name}</a>
+                        : <span className="NavbarElement" key={opt.id}>{opt.name}</span>
                 )
             }
         </div>

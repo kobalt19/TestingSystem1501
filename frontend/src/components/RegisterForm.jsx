@@ -11,6 +11,7 @@ const RegisterForm = (setToken) =>
     const usernameInputRef = useRef();
     const passwordInputRef = useRef();
     const passwordAgainInputRef = useRef();
+    const refs = [usernameInputRef, passwordInputRef, passwordAgainInputRef];
     const [sendForm, isLoading, error] = useFetching(async (username, password, password_again) =>
     {
         const response = await TestService.register({
@@ -52,8 +53,12 @@ const RegisterForm = (setToken) =>
             <div className="input-group">
                 <Button onClick={() => 
                     {
-                        sendForm(usernameInputRef.current.value, passwordInputRef.current.value, passwordAgainInputRef.current.value);
-                        navigate('/pending_tests');
+                        sendForm(...refs.map(ref => ref.current.value));
+                        if (!error)
+                        {
+                            console.log(error);
+                            navigate('/pending_tests');
+                        }
                     }
                 }>
                     Зарегистрироваться

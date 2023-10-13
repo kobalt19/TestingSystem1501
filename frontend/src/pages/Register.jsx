@@ -5,7 +5,11 @@ import RegisterForm from '../components/RegisterForm.jsx';
 
 const Register = () =>
 {
-    const options = [{name: 'Тесты', link: '/pending_tests', active: true, id: 0}, {name: 'Результаты', link: '/results', active: false, id: 1}];
+    const options = 
+    [
+        {name: 'Тесты', link: '/pending_tests', active: true, id: 0}, 
+        {name: 'Результаты', link: '/results', active: true, id: 1}
+    ];
     return (
         <div className="Register">
             <Navbar options={options}/>

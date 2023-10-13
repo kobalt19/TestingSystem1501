@@ -1,9 +1,8 @@
 from datetime import timedelta
 from typing import Annotated
 from fastapi import (
-    Depends, status
+    Depends, HTTPException, status
 )
-from fastapi.exceptions import HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse
 from . import server
@@ -24,19 +23,23 @@ __all__ = (
 TOKEN_EXPIRE_MINUTES = 180
 
 
-@server.post('/register')
-def register(form_data: Annotated[UserRegisterSchema, Depends()], session=get_db()):
-    exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        headers={'WWW_Authenticate': 'Bearer'}
-    )
+@server.post('/register', response_model=Token)
+def register(form_data: UserRegisterSchema, session=get_db()):
     if form_data.password != form_data.password_again:
-        exception.detail = 'Passwords does not match'
-        raise exception
+        print('banan')
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail='Passwords does not match',
+            headers={'WWW_Authenticate': 'Bearer'}
+        )
     user = create_user(session, form_data.username, form_data.password)
     if not user:
-        exception.detail = 'Bad password'
-        raise exception
+        print('banan4ik')
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail='Bad password',
+            headers={'WWW_Authenticate': 'Bearer'}
+        )
     access_token_expires = timedelta(minutes=TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
         data={'sub': user.username}, expires_delta=access_token_expires
