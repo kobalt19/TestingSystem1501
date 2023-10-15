@@ -7,7 +7,7 @@ from string import (
 )
 import sqlite3
 from typing import (
-    Annotated, Optional, Union
+    Annotated, Optional, Union, Any
 )
 from dotenv import load_dotenv
 from fastapi import (
@@ -23,6 +23,13 @@ from sqlalchemy.orm import Session
 from .models.users import User
 from .schemas.tokens import TokenData
 
+__all__ = [
+    'create_user',
+    'authenticate_user',
+    'create_access_token',
+    'verify_access_token'
+]
+
 pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='/token')
@@ -33,7 +40,7 @@ algorithm = os.getenv('ALGORITHM')
 
 
 def create_user(session: Session, username: str, passwd: str) -> Union[User, bool]:
-    if not is_password_correct(passwd):
+    if not is_password_good(passwd):
         return False
     hashed_passwd = get_password_hash(passwd)
     user = User(
@@ -56,7 +63,17 @@ def authenticate_user(session: Session, username: str, passwd: str) -> Union[Use
     return user
 
 
-def is_password_correct(password):
+def get_current_user(session: Session, token: str = Depends(oauth2_scheme)) -> Union[User, bool]:
+    decoded_data = verify_access_token(token)
+    if not decoded_data:
+        return False
+    user: User = session.query(User).filter(User.username == decoded_data['sub']).one()
+    if not user:
+        return False
+    return user
+
+
+def is_password_good(password):
     try:
         assert len(password) >= 8
         assert all(c in (ascii_letters + digits) for c in password)
@@ -75,7 +92,7 @@ def get_password_hash(plain_passwd):
     return pwd_context.hash(plain_passwd)
 
 
-def create_access_token(data: dict, expires_delta: timedelta | None = None):
+def create_access_token(data: dict, expires_delta: timedelta | None = None) -> str:
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
@@ -86,21 +103,9 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     return encoded_jwt
 
 
-async def get_current_user(session: Session, token: Annotated[str, Depends(oauth2_scheme)]) -> Optional[User]:
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail='Could not validate credentials',
-        headers={'WWW-Authenticate': 'Bearer'}
-    )
+def verify_access_token(token: str) -> Union[dict, bool]:
     try:
-        payload = jwt.decode(token, jwt_secret_key, algorithms=[algorithm])
-        username: str = payload.get('sub')
-        if username is None:
-            raise credentials_exception
-        token_data = TokenData(username=username)
+        decoded_data = jwt.decode(token, jwt_secret_key, algorithms=[algorithm])
+        return decoded_data
     except JWTError:
-        raise credentials_exception
-    user = session.query(User).filter(User.username == token_data.username).one()
-    if user is None:
-        raise credentials_exception
-    return user
+        return False

@@ -7,18 +7,14 @@ class UserBaseSchema(BaseModel):
     username: str
 
 
-class CreateUserSchema(UserBaseSchema):
-    password_hash: str = Field(alias='password')
-
-
-class UserSchema(UserBaseSchema):
-    id: int
-    is_active: bool = Field(default=False)
-
-    class Config:
-        from_attributes = True
-
-
-class UserRegisterSchema(UserBaseSchema):
+class UserLoginSchema(UserBaseSchema):
     password: str
+
+
+class UserRegisterSchema(UserLoginSchema):
     password_again: str
+
+
+class UserFullSchema(UserBaseSchema):
+    id: int
+    password_hash: str
