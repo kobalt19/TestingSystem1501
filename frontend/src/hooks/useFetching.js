@@ -1,26 +1,28 @@
-import {useState} from 'react';
+import * as React from 'react';
 
 
-const useFetching = (callback) =>
+function useFetching(callback)
 {
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState('');
-    const fetching = async (...args) =>
+    const [error, setError] = React.useState('');
+    const [isLoading, setIsLoading] = React.useState(false);
+
+    async function fetching(...args)
     {
         try
         {
+            setError('');
             setIsLoading(true);
             await callback(...args);
         }
-        catch (e)
+        catch (err)
         {
-            setError(e.message);
+            setError(err.response.data.detail);
         }
         finally
         {
             setIsLoading(false);
         }
-    };
+    }
     return [fetching, isLoading, error];
 }
 

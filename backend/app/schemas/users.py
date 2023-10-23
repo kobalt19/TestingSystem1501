@@ -1,24 +1,16 @@
-from pydantic import (
-    BaseModel, Field
-)
+from pydantic import BaseModel
 
 
 class UserBaseSchema(BaseModel):
     username: str
 
 
-class CreateUserSchema(UserBaseSchema):
-    password_hash: str = Field(alias='password')
-
-
-class UserSchema(UserBaseSchema):
-    id: int
-    is_active: bool = Field(default=False)
-
-    class Config:
-        from_attributes = True
-
-
 class UserRegisterSchema(UserBaseSchema):
     password: str
     password_again: str
+
+
+class UserFullSchema(UserBaseSchema):
+    hashed_password: str
+    id: int
+
