@@ -1,0 +1,10 @@
+{
+  "tests": [],
+  "users": [
+    {
+      "id": 0,
+      "username": "stepanmol4anoff",
+      "hashed_password": "$2b$12$fXdjEHu4NQuToCdmXVXbLuhtyO3Q8oluK.YJHM8mdiUETWY34uFOy"
+    }
+  ]
+}
