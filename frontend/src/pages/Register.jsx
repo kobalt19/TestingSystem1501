@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import {CAlert, CButton, CContainer, CForm, CFormInput, CFormLabel, CFormText} from '@coreui/react';
 import CustomNavbar from '../components/CustomNavbar.jsx';
 import Fetching from '../API/Fetching.js';
-import useFetching from '../hooks/useFetching.js';
+import useFetch from '../hooks/useFetch.js';
 
 function Register()
 {
-    const [register, isLoading, error] = useFetching(async function(username, password, passwordAgain)
+    const [register, isLoading, error] = useFetch(async function(username, password, passwordAgain)
     {
         return await Fetching.register(username, password, passwordAgain);
     });
