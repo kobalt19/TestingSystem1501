@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import {createBrowserRouter, RouterProvider, Router} from 'react-router-dom';
 import { AuthContext } from './context';
 import Login from './pages/Login.jsx';
 import Main from './pages/Main.jsx';

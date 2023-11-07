@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useRef,  useState} from 'react';
 import {useNavigate} from 'react-router';
 import {CAlert, CButton, CContainer, CForm, CFormInput, CFormLabel, CFormText} from '@coreui/react';
 import {AuthContext} from '../context';
@@ -8,49 +8,26 @@ import useFetch from '../hooks/useFetch.js';
 
 function Login()
 {
-    const [error, setError] = useState('');
     const navigate = useNavigate();
 
+    const usernameInputRef = useRef();
+    const passwordInputRef = useRef();
+
     const context = useContext(AuthContext);
+
+    const [fetchLogin, isLoading, error] = useFetch(async (username, password) => {
+        const response = await Fetching.login(username, password);
+        console.log(response);
+        return response;
+    });
 
     async function sendForm(e)
     {
         e.preventDefault();
-        try
-        {
-            const response = await Fetching.login(username, password);
-            if (response.status === 200)
-            {
-                const responseData = await response.data;
-                const token = await responseData['access_token'];
-                context.setToken(token);
-                navigate('/');
-            }
-        }
-        catch (err)
-        {
-            try
-            {
-                setError(err.response.data.detail);
-            }
-            catch
-            {
-                setError(err.message);
-            }
-        }
-    }
-
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-
-    function handleUsername(event)
-    {
-        setUsername(event.target.value);
-    }
-
-    function handlePassword(event)
-    {
-        setPassword(event.target.value);
+        const username = usernameInputRef.current.value;
+        const password = passwordInputRef.current.value;
+        const response = await fetchLogin(username, password);
+        console.log(response);
     }
 
     return (
@@ -62,11 +39,11 @@ function Login()
                     <CForm onSubmit={sendForm}>
                         <div className="mb-3">
                             <CFormLabel htmlFor="usernameInput">Имя пользователя</CFormLabel>
-                            <CFormInput type="text" id="usernameInput" onChange={handleUsername}/>
+                            <CFormInput type="text" id="usernameInput" ref={usernameInputRef}/>
                         </div>
                         <div className="mb-3">
                             <CFormLabel htmlFor="passwordInput">Пароль</CFormLabel>
-                            <CFormInput type="password" id="passwordInput" onChange={handlePassword}/>
+                            <CFormInput type="password" id="passwordInput" ref={passwordInputRef}/>
                         </div>
                         <CButton type="submit" className="mb-3">Войти</CButton>
                         {
