@@ -12,7 +12,8 @@ function useFetching(callback)
         {
             setError('');
             setIsLoading(true);
-            await callback(...args);
+            const response = await callback(...args);
+            return response;
         }
         catch (err)
         {

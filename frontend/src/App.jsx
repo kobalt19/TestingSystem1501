@@ -23,14 +23,11 @@ function App()
     ]);
 
     const [isAuth, setIsAuth] = React.useState(false);
-    const [token, setToken] = React.useState('');
     return (
         <AuthContext.Provider value={
             {
                 isAuth,
-                setIsAuth,
-                token,
-                setToken
+                setIsAuth
             }
         }>
             <React.StrictMode>

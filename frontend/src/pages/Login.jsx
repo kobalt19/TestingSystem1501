@@ -1,5 +1,6 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router';
+import Cookies from 'universal-cookie';
 import {CAlert, CButton, CContainer, CForm, CFormInput, CFormLabel, CFormText} from '@coreui/react';
 import { AuthContext } from '../context';
 import CustomNavbar from '../components/CustomNavbar.jsx';
@@ -10,8 +11,11 @@ function Login()
 {
     const [login, isLoading, error] = useFetching(async (username, password) =>
     {
-        return await Fetching.login(username, password);
+        const response = await Fetching.login(username, password);
+        return response;
     });
+
+    const cookies = new Cookies();
 
     const navigate = useNavigate();
 
@@ -21,11 +25,11 @@ function Login()
     {
         e.preventDefault();
         const response = await login(username, password);
-        if (response.ok)
+        if (response.status === 200)
         {
-            const responseData = await response.json();
-            const token = await responseData.token;
-            context.setToken(token);
+            const responseData = await response.data;
+            const token = await responseData.access_token;
+            cookies.set('token', token, {path: '/'});
             navigate('/');
         }
     }
