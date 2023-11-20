@@ -1,7 +1,7 @@
-venv
-.idea
-__pycache__
+venv/
+.idea/
+__pycache__/
 test.py
-.vs
-.vscode
+.vs/
+.vscode/
 TestingSystem1501.code-workspace
