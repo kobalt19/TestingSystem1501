@@ -40,7 +40,7 @@ class Fetching
         return response;
     }
 
-    static async get_current_user(_token)
+    static async getCurrentUser(_token)
     {
         const response = await Axios.get('http://127.0.0.1:8080/current_user?' +
                                          new URLSearchParams({token: _token}),

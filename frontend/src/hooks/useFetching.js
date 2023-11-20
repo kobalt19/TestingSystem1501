@@ -17,7 +17,14 @@ function useFetching(callback)
         }
         catch (err)
         {
-            setError(err.response.data.detail);
+            try
+            {
+                setError(err.response.data.detail);
+            }
+            catch
+            {
+                setError(err.message);
+            }
         }
         finally
         {

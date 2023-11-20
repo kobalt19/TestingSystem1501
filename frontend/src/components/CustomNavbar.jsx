@@ -6,7 +6,7 @@ import Fetching from '../API/Fetching.js';
 import useFetching from '../hooks/useFetching.js';
 
 
-function CustomNavbar()
+function CustomNavbar({noProfile=false})
 {
     const cookies = new Cookies();
     const context = useContext(AuthContext);
@@ -15,7 +15,7 @@ function CustomNavbar()
     const [loadUsername, isLoading, error] = useFetching(async () => 
     {
         const token = cookies.get('token');
-        const response = await Fetching.get_current_user(token);
+        const response = await Fetching.getCurrentUser(token);
         const responseData = await response.data;
         setUsername(await responseData.username);
     })
@@ -28,26 +28,30 @@ function CustomNavbar()
             <CContainer fluid>
                 <CNavbarBrand href="/" style={{color: '#ffffff'}}>TestingSystem1501</CNavbarBrand>
                 <CNavbarToggler onClick={() => setVisible(!visible)}/>
-                <CCollapse className="navbar-collapse" visible={visible}>
-                    {
-                        username
-                        ? 
-                        <CNavbarNav className="ms-auto">
-                            <CNavItem>
-                                <CNavLink href="#" style={{color: '#ffffff'}}>{username}</CNavLink>
-                            </CNavItem>
-                        </CNavbarNav>
-                        :
-                        <CNavbarNav className="ms-auto">
-                            <CNavItem>
-                                <CNavLink href="/register" style={{color: '#ffffff'}}>Регистрация</CNavLink>
-                            </CNavItem>
-                            <CNavItem>
-                                <CNavLink href="/login" style={{color: '#ffffff'}}>Вход</CNavLink>
-                            </CNavItem>
-                        </CNavbarNav>
-                    }
-                </CCollapse>
+                {
+                    !noProfile
+                    &&
+                        <CCollapse className="navbar-collapse" visible={visible}>
+                            {
+                                username
+                                ? 
+                                    <CNavbarNav className="ms-auto">
+                                        <CNavItem>
+                                            <CNavLink href="/user" style={{color: '#ffffff'}}>{username}</CNavLink>
+                                        </CNavItem>
+                                    </CNavbarNav>
+                                :
+                                    <CNavbarNav className="ms-auto">
+                                        <CNavItem>
+                                            <CNavLink href="/register" style={{color: '#ffffff'}}>Регистрация</CNavLink>
+                                        </CNavItem>
+                                        <CNavItem>
+                                            <CNavLink href="/login" style={{color: '#ffffff'}}>Вход</CNavLink>
+                                        </CNavItem>
+                                    </CNavbarNav>
+                            }
+                        </CCollapse>
+                }
             </CContainer>
         </CNavbar>
     )

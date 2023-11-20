@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import { AuthContext } from './context';
+import Account from './pages/Account.jsx';
 import Login from './pages/Login.jsx';
 import Main from './pages/Main.jsx';
 import Register from './pages/Register.jsx';
@@ -11,6 +12,10 @@ function App()
         {
             path: '/',
             element: <Main/>
+        },
+        {
+            path: '/account',
+            element: <Account/>
         },
         {
             path: '/register',
