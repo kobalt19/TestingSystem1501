@@ -1,5 +1,20 @@
 {
-  "tests": [],
+  "tests": [
+    {
+      "users": [
+        0
+      ],
+      "questions": [
+        {
+          "number": 1,
+          "question": "Question №1",
+          "answer": "Answer №1"
+        }
+      ],
+      "id": 0,
+      "desc": "Test description №1"
+    }
+  ],
   "users": [
     {
       "id": 0,

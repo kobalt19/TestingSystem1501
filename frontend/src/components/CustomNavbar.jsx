@@ -37,7 +37,7 @@ function CustomNavbar({noProfile=false})
                                 ? 
                                     <CNavbarNav className="ms-auto">
                                         <CNavItem>
-                                            <CNavLink href="/user" style={{color: '#ffffff'}}>{username}</CNavLink>
+                                            <CNavLink href="/account" style={{color: '#ffffff'}}>{username}</CNavLink>
                                         </CNavItem>
                                     </CNavbarNav>
                                 :

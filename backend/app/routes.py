@@ -12,20 +12,20 @@ from . import (
 from .data import *
 from .schemas.users import UserRegisterSchema
 from .utils import (
-    authenticate_user, create_access_token, get_current_user, register
+    authenticate_user, create_access_token, get_current_user, get_tests, register
 )
 
 __all__ = [
-    'all_tests',
     'login_for_access_token',
     'register_user'
 ]
 
 
-@server.get('/all_tests')
-def all_tests():
-    tests = get_all_tests()
-    return JSONResponse(tests)
+@server.get('/tests')
+async def get_pending_tests(token: str = ''):
+    tests_res = await get_tests(token)
+    tests = [test.model_dump() for test in tests_res]
+    return JSONResponse({'tests': tests})
 
 
 @server.post('/token')

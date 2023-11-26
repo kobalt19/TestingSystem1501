@@ -14,8 +14,9 @@ from typing import (
 )
 from . import SECRET_KEY, ALGORITHM
 from .data import (
-    create_user, get_user
+    create_user, get_user, get_user_tests
 )
+from .schemas.tests import TestSchema
 from .schemas.tokens import TokenData
 from .schemas.users import UserRegisterSchema
 
@@ -104,3 +105,9 @@ def register(data: UserRegisterSchema):
             detail='Пользователь с таким именем уже существует!'
         )
     return res
+
+
+async def get_tests(token):
+    user = await get_current_user(token)
+    tests = get_user_tests(user.id)
+    return [TestSchema.model_validate(test) for test in tests]

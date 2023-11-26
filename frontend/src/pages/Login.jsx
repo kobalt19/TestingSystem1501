@@ -30,7 +30,7 @@ function Login()
             const responseData = await response.data;
             const token = await responseData.access_token;
             cookies.set('token', token, {path: '/'});
-            navigate('/');
+            navigate('/account');
         }
     }
 

@@ -51,6 +51,19 @@ class Fetching
         });
         return response;
     }
+
+    static async getTests(_token)
+    {
+        const response = await Axios.get('http://127.0.0.1:8080/tests?' + 
+                                         new URLSearchParams({token: _token}),
+            {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }          
+        );
+        return response;                     
+    }
 }
 
 

@@ -6,7 +6,6 @@ from ..schemas.users import UserFullSchema
 json_filename = os.path.join(os.path.dirname(__file__), 'data.json')
 
 __all__ = [
-    'get_all_tests',
     'create_user',
     'get_user',
 ]
@@ -23,9 +22,10 @@ def update_json_data(new_json_data):
         json.dump(new_json_data, json_file)
 
 
-def get_all_tests():
+def get_user_tests(id):
     json_data = get_json_data()
-    return json_data['tests']
+    tests_list = json_data.get('tests')
+    return [test for test in tests_list if id in test.get('users', [])]
 
 
 def get_user(username):
