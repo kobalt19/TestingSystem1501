@@ -7,7 +7,7 @@ import CustomNavbar from '../components/CustomNavbar.jsx';
 import Fetching from '../API/Fetching.js';
 import useFetching from '../hooks/useFetching.js';
 
-function Login()
+const Login = () =>
 {
     const [login, isLoading, error] = useFetching(async (username, password) =>
     {

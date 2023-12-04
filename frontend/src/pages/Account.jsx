@@ -18,7 +18,7 @@ const Account = () =>
             // case 'Results':
             //     return <Results/>
             default:
-                return <p>Ошибка</p>
+                return <>Ошибка</>
         }
     }
 
@@ -91,21 +91,25 @@ const Account = () =>
                 :
                     <CoreUI.CContainer lg>
                         <h1 style={{marginTop: '5%', marginBottom: '5%'}}>{user.username}</h1>
-                        <CoreUI.CNav>
-                            <CoreUI.CNavItem>
-                                <CoreUI.CNavLink onClick={handleChange} id="pending_tests">
-                                    Открытые тесты
-                                </CoreUI.CNavLink>
-                            </CoreUI.CNavItem>
-                            <CoreUI.CNavItem>
-                                <CoreUI.CNavLink onClick={handleChange} id="results">
-                                    Результаты тестов
-                                </CoreUI.CNavLink>
-                            </CoreUI.CNavItem>
-                        </CoreUI.CNav>
-                        {
-                            renderComponent(component)
-                        }
+                        <p>
+                            <CoreUI.CNav>
+                                <CoreUI.CNavItem>
+                                    <CoreUI.CNavLink onClick={handleChange} id="pending_tests">
+                                        Открытые тесты
+                                    </CoreUI.CNavLink>
+                                </CoreUI.CNavItem>
+                                <CoreUI.CNavItem>
+                                    <CoreUI.CNavLink onClick={handleChange} id="results">
+                                        Результаты тестов
+                                    </CoreUI.CNavLink>
+                                </CoreUI.CNavItem>
+                            </CoreUI.CNav>
+                        </p>
+                        <p>
+                            {
+                                renderComponent(component)
+                            }
+                        </p>
                     </CoreUI.CContainer>
             }
         </div>

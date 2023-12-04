@@ -6,7 +6,7 @@ import Login from './pages/Login.jsx';
 import Main from './pages/Main.jsx';
 import Register from './pages/Register.jsx';
 
-function App()
+const App = () =>
 {
     const router = createBrowserRouter([
         {

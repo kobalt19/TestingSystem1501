@@ -6,7 +6,7 @@ import Fetching from '../API/Fetching.js';
 import useFetching from '../hooks/useFetching.js';
 
 
-function CustomNavbar({noProfile=false})
+const CustomNavbar = ({noProfile=false}) =>
 {
     const cookies = new Cookies();
     const context = useContext(AuthContext);

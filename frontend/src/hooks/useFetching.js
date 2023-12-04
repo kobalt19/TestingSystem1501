@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 
-function useFetching(callback)
+const useFetching = (callback) =>
 {
     const [error, setError] = React.useState('');
     const [isLoading, setIsLoading] = React.useState(false);

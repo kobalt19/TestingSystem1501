@@ -4,7 +4,7 @@ import CustomNavbar from '../components/CustomNavbar.jsx';
 import Fetching from '../API/Fetching.js';
 import useFetching from '../hooks/useFetching.js';
 
-function Register()
+const Register = () =>
 {
     const [register, isLoading, error] = useFetching(async function(username, password, passwordAgain)
     {
